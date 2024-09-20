@@ -9,6 +9,10 @@ module.exports = {
         'test' : '#D8B4E2'
       },
     },
+    fontFamily: {
+      jediFont: ['JediFont'], 
+      jediFont2: ['JediFont2'], 
+    },
   },
   plugins: [],
 }

@@ -1,15 +1,15 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold mb-8">Starships</h1>
-    <div v-if="!loading && starships?.length" class="grid grid-cols-3 gap-4">
-      <div v-for="starship in starships" :key="starship?.name" class="border p-4 rounded-md bg-gray-100">
+    <div v-if="!loading && starships?.length" class="grid grid-cols-3 gap-4 max-w-[50%] m-auto">
+      <div v-for="starship in starships" :key="starship?.name" class=" rounded-[17px] overflow-hidden  bg-[#fbde2a29] transition-all duration-100 hover:[box-shadow:1px_1px_16px_-1px_#fadd2a] pb-[10px]">
         <NuxtLink :to="`/starships-detail/${getStarshipId(starship?.url)}`" class="font-semibold">
           <img
             :src="getStarshipImage(starship.url)"
             alt="Starship Image"
-            class="w-full h-128 object-cover mb-2"
+            class="w-full h-128 object-cover mb-2 max-h-[205px]"
           />
-          <div class="mt-2 text-center">
+          <div class="mt-2 text-center text-white">
             {{ starship?.name }}
             <p>Model: {{ starship.model }}</p>
             <p>Manufacturer: {{ starship.manufacturer }}</p>

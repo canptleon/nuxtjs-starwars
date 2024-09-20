@@ -1,18 +1,18 @@
 <template>
-  <div v-if="vehicle" class="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+  <div v-if="vehicle" class="flex flex-col items-center rounded-[20px] justify-center w-[400px] ml-[auto] mr-[auto] mt-[220px] min-h-[370px] bg-white text-black p-4">
     <!-- Vehicle Image -->
     <img
       :src="getVehicleImage(route.params.id)"
       alt="Vehicle Image"
-      class="w-48 h-48 object-cover rounded-full mb-4"
+      class="w-48 h-48 object-cover rounded-full mb-4 -mt-[158px] [filter:drop-shadow(2px_4px_6px)] border-[4px] border-[solid] border-[#fcdf2b]"
     />
-    <h1 class="text-4xl font-bold mb-4">{{ vehicle.name }}</h1>
-    <p class="text-lg mb-2"><strong>Model:</strong> {{ vehicle.model }}</p>
-    <p class="text-lg mb-2"><strong>Manufacturer:</strong> {{ vehicle.manufacturer }}</p>
-    <p class="text-lg mb-2"><strong>Cost:</strong> {{ vehicle.cost_in_credits }} credits</p>
-    <p class="text-lg mb-2"><strong>Length:</strong> {{ vehicle.length }} meters</p> <!-- Additional info -->
-    <p class="text-lg mb-2"><strong>Crew:</strong> {{ vehicle.crew }}</p> <!-- Additional info -->
-    <p class="text-lg mb-2"><strong>Passengers:</strong> {{ vehicle.passengers }}</p> <!-- Additional info -->
+    <h1 class="text-3xl font-bold mb-4 font-jediFont tracking-[2px] text-[black] [text-shadow:0px_0_3px_#fcdf2b]">{{ vehicle.name }}</h1>
+    <p class="text-lg mb-2"><strong>Model:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ vehicle.model }}</span></p>
+    <p class="text-lg mb-2"><strong>Manufacturer:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ vehicle.manufacturer }}</span></p>
+    <p class="text-lg mb-2"><strong>Cost:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ vehicle.cost_in_credits }} credits</span></p>
+    <p class="text-lg mb-2"><strong>Length:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ vehicle.length }} meters</span></p> <!-- Additional info -->
+    <p class="text-lg mb-2"><strong>Crew:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ vehicle.crew }}</span></p> <!-- Additional info -->
+    <p class="text-lg mb-2"><strong>Passengers:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ vehicle.passengers }}</span></p> <!-- Additional info -->
   </div>
   <div v-else>
     <p class="text-center">Loading...</p>

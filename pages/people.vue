@@ -1,15 +1,15 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold mb-8">People</h1>
-    <div v-if="!loading && people?.length" class="grid grid-cols-3 gap-4">
-      <div v-for="person in people" :key="person?.name" class="border p-1 rounded-md bg-gray-100">
+    <div v-if="!loading && people?.length" class="grid grid-cols-3 gap-4 max-w-[50%] m-auto justify-center">
+      <div v-for="person in people" :key="person?.name" class=" rounded-[17px] overflow-hidden  bg-[#fbde2a29] transition-all duration-100 hover:[box-shadow:1px_1px_16px_-1px_#fadd2a] pb-[10px]">
         <NuxtLink :to="`/people-detail/${getPersonId(person?.url)}`" class="font-semibold">
           <img
             :src="getPersonImage(person.url)"
             alt="Person Image"
             class="w-full h-128 object-cover mb-2"
           />
-          <div class="mt-2 text-center">
+          <div class="mt-2 text-center text-white">
             {{ person?.name }}
             <p>Height: {{ person.height }} cm</p>
             <p>Mass: {{ person.mass }} kg</p>

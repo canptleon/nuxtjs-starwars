@@ -1,15 +1,15 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold mb-8">Species</h1>
-    <div v-if="!loading && speciesList?.length" class="grid grid-cols-3 gap-4">
-      <div v-for="species in speciesList" :key="species?.name" class="border p-4 rounded-md bg-gray-100">
+    <div v-if="!loading && speciesList?.length" class="grid grid-cols-3 gap-4 max-w-[50%] m-auto">
+      <div v-for="species in speciesList" :key="species?.name" class=" rounded-[17px] overflow-hidden  bg-[#fbde2a29] transition-all duration-100 hover:[box-shadow:1px_1px_16px_-1px_#fadd2a] pb-[10px]">
         <NuxtLink :to="`/species-detail/${getSpeciesId(species?.url)}`" class="font-semibold">
           <img
             :src="getSpeciesImage(species.url)"
             alt="Species Image"
-            class="w-full h-128 object-cover mb-2"
+            class="w-full h-128 object-cover mb-2 "
           />
-          <div class="mt-2 text-center">
+          <div class="mt-2 text-center text-white">
             {{ species?.name }}
             <p>Classification: {{ species.classification }}</p>
             <p>Language: {{ species.language }}</p>

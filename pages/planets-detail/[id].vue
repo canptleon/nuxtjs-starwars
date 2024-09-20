@@ -1,16 +1,16 @@
 <template>
-  <div v-if="planet" class="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+  <div v-if="planet" class="flex flex-col items-center rounded-[20px] justify-center w-[400px] ml-[auto] mr-[auto] mt-[220px] min-h-[370px] bg-white text-black p-4">
     <!-- Planet Image -->
     <img
       :src="getPlanetImage(route.params.id)"
       alt="Planet Image"
-      class="w-48 h-48 object-cover rounded-full mb-4"
+      class="w-48 h-48 object-cover rounded-full mb-4 -mt-[158px] [filter:drop-shadow(2px_4px_6px)] border-[4px] border-[solid] border-[#fcdf2b]"
     />
-    <h1 class="text-4xl font-bold mb-4">{{ planet.name }}</h1>
-    <p class="text-lg mb-2"><strong>Diameter:</strong> {{ planet.diameter }} km</p>
-    <p class="text-lg mb-2"><strong>Climate:</strong> {{ planet.climate }}</p>
-    <p class="text-lg mb-2"><strong>Terrain:</strong> {{ planet.terrain }}</p>
-    <p class="text-lg mb-2"><strong>Population:</strong> {{ planet.population }}</p>
+    <h1 class="text-3xl font-bold mb-4 font-jediFont tracking-[2px] text-[black] [text-shadow:0px_0_3px_#fcdf2b]">{{ planet.name }}</h1>
+    <p class="text-lg mb-2"><strong>Diameter:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ planet.diameter }} km</span></p>
+    <p class="text-lg mb-2"><strong>Climate:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ planet.climate }}</span></p>
+    <p class="text-lg mb-2"><strong>Terrain:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ planet.terrain }}</span></p>
+    <p class="text-lg mb-2"><strong>Population:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ planet.population }}</span></p>
   </div>
   <div v-else>
     <p class="text-center">Loading...</p>

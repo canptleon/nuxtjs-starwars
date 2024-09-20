@@ -1,19 +1,19 @@
 <template>
-  <div v-if="person" class="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+  <div v-if="person" class="flex flex-col items-center rounded-[20px] justify-center w-[400px] ml-[auto] mr-[auto] mt-[220px] min-h-[470px] bg-white text-black p-4">
     <!-- Person Image -->
     <img
       :src="getPersonImage(route.params.id)"
       alt="Person Image"
-      class="w-48 h-48 object-cover rounded-full mb-4"
+      class="w-48 h-48 object-cover rounded-full mb-4 -mt-[158px] [filter:drop-shadow(2px_4px_6px)] border-[4px] border-[solid] border-[#fcdf2b]"
     />
-    <h1 class="text-4xl font-bold mb-4">{{ person.name }}</h1>
-    <p class="text-lg mb-2">Height: {{ person.height }} cm</p>
-    <p class="text-lg mb-2">Mass: {{ person.mass }} kg</p>
-    <p class="text-lg mb-2">Hair Color: {{ person.hair_color }}</p>
-    <p class="text-lg mb-2">Skin Color: {{ person.skin_color }}</p>
-    <p class="text-lg mb-2">Birth Year: {{ person.birth_year }}</p>
-    <p class="text-lg mb-2">Homeworld: {{ person.homeworld }}</p> <!-- Example additional info -->
-    <p class="text-lg mb-2">Species: {{ person.species }}</p> <!-- Example additional info -->
+    <h1 class="text-3xl font-bold mb-4 font-jediFont tracking-[2px] text-[black] [text-shadow:0px_0_3px_#fcdf2b]">{{ person.name }}</h1>
+    <p class="text-lg mb-2">Height: <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.height }} cm</span></p>
+    <p class="text-lg mb-2">Mass: <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.mass }} kg</span></p>
+    <p class="text-lg mb-2">Hair Color: <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.hair_color }}</span></p>
+    <p class="text-lg mb-2">Skin Color: <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.skin_color }}</span></p>
+    <p class="text-lg mb-2">Birth Year: <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.birth_year }}</span></p>
+    <p class="text-lg mb-2 text-center">Homeworld: <br /><span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.homeworld }}</span></p> <!-- Example additional info -->
+    <p class="text-lg mb-2 text-center">Species: <br /><span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.species }}</span></p> <!-- Example additional info -->
   </div>
   <div v-else>
     <p class="text-center">Loading...</p>

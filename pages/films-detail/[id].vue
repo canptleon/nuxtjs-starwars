@@ -1,15 +1,15 @@
 <template>
-  <div v-if="film" class="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+  <div v-if="film" class="flex flex-col items-start rounded-[20px] justify-center w-[500px] ml-[auto] mr-[auto] mt-[220px] min-h-[470px] bg-white text-black p-4">
     <!-- Film Image -->
     <img
       :src="getFilmImage(route.params.id)"
       alt="Film Image"
-      class="w-48 h-72 object-cover rounded-lg mb-4"
+      class="w-48 h-72 object-cover rounded-full mx-auto mb-4 -mt-[158px] [filter:drop-shadow(2px_4px_6px)] border-[4px] border-[solid] border-[#fcdf2b]"
     />
-    <h1 class="text-4xl font-bold mb-4">{{ film.title }}</h1>
-    <p class="text-lg mb-2"><strong>Director:</strong> {{ film.director }}</p>
-    <p class="text-lg mb-2"><strong>Producer:</strong> {{ film.producer }}</p>
-    <p class="text-lg mb-2"><strong>Release Date:</strong> {{ film.release_date }}</p>
+    <h1 class="text-3xl font-bold mb-4 font-jediFont tracking-[2px] text-[black] [text-shadow:0px_0_3px_#fcdf2b] mx-auto">{{ film.title }}</h1>
+    <p class="text-lg mb-2"><strong>Director:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ film.director }}</span></p>
+    <p class="text-lg mb-2"><strong>Producer:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ film.producer }}</span></p>
+    <p class="text-lg mb-2"><strong>Release Date:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ film.release_date }}</span></p>
     <p class="text-lg mb-4"><strong>Opening Crawl:</strong></p>
     <p class="text-md">{{ film.opening_crawl }}</p>
   </div>

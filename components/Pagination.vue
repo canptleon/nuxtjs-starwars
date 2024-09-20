@@ -6,8 +6,8 @@
       @click="handlePageClick(page)"
       :disabled="currentPage === page"
       :class="[ 
-        'px-4 py-2 border rounded-md',
-        currentPage === page ? 'bg-blue-500 text-white cursor-not-allowed' : 'bg-gray-200'
+        'px-4 py-2 border rounded-md bg-[black] text-[white] border-[solid] border-[#fcdf2b] hover:bg-[#fcdf2b] font-jediFont hover:text-black transition-all duration-200',
+        currentPage === page ? '!bg-[#fcdf2b] text-black font-bold cursor-not-allowed' : 'bg-black'
       ]"
     >
       {{ page }}
