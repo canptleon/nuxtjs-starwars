@@ -3,37 +3,30 @@
     <h1 class="text-2xl font-bold mb-8">Planets</h1>
     <div v-if="!loading && planets?.length" class="grid grid-cols-3 gap-4">
       <div v-for="planet in planets" :key="planet?.name" class="border p-4 rounded-md bg-gray-100">
-        <img
-          :src="getPlanetImage(planet.url)"
-          alt="Planet Image"
-          class="w-full h-64 object-cover mb-2"
-        />
         <NuxtLink :to="`/planets-detail/${getPlanetId(planet?.url)}`" class="font-semibold">
-          {{ planet?.name }}
+          <img
+            :src="getPlanetImage(planet.url)"
+            alt="Planet Image"
+            class="w-full h-128 object-cover mb-2"
+          />
+          <div class="mt-2 text-center">
+            {{ planet?.name }}
+            <p>Climate: {{ planet.climate }}</p>
+            <p>Terrain: {{ planet.terrain }}</p>
+          </div>
         </NuxtLink>
-        <p>Climate: {{ planet.climate }}</p>
-        <p>Terrain: {{ planet.terrain }}</p>
       </div>
     </div>
     
     <div v-else-if="loading" class="text-center text-xl font-semibold">
       <Loader />
     </div>
-    
-    <div v-if="!loading" class="mt-8 flex justify-center items-center space-x-2">
-      <button
-        v-for="page in pages"
-        :key="page"
-        @click="goToPage(page)"
-        :disabled="currentPage === page"
-        :class="[ 
-          'px-4 py-2 border rounded-md',
-          currentPage === page ? 'bg-blue-500 text-white cursor-not-allowed' : 'bg-gray-200'
-        ]"
-      >
-        {{ page }}
-      </button>
-    </div>
+    <Pagination 
+      v-if="!loading"
+      :currentPage="currentPage" 
+      :totalPages="totalPages" 
+      @pageClick="goToPage" 
+    />
   </div>
 </template>
 
@@ -41,6 +34,12 @@
 import { ref, computed, watch } from 'vue';
 import { useRoute, useRouter, useAsyncData, useState } from 'nuxt/app';
 import Loader from '~/components/Loader.vue';
+import Pagination from '~/components/Pagination.vue';
+import { useSeoMeta } from '#app'
+
+useSeoMeta({
+  title: 'Star Wars App | Planets',
+})
 
 const route = useRoute();
 const router = useRouter();
@@ -104,6 +103,11 @@ const getPlanetId = (url) => {
 
 const getPlanetImage = (url) => {
   const id = getPlanetId(url);
-  return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
+  if ((id >= 2 && id <= 19) || id == 21) {
+    return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
+  } else {
+    return '/no-image.png';
+  }
 };
+
 </script>

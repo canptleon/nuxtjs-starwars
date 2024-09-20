@@ -3,37 +3,30 @@
     <h1 class="text-2xl font-bold mb-8">Starships</h1>
     <div v-if="!loading && starships?.length" class="grid grid-cols-3 gap-4">
       <div v-for="starship in starships" :key="starship?.name" class="border p-4 rounded-md bg-gray-100">
-        <img
-          :src="getStarshipImage(starship.url)"
-          alt="Starship Image"
-          class="w-full h-32 object-cover mb-2"
-        />
         <NuxtLink :to="`/starships-detail/${getStarshipId(starship?.url)}`" class="font-semibold">
-          {{ starship?.name }}
+          <img
+            :src="getStarshipImage(starship.url)"
+            alt="Starship Image"
+            class="w-full h-128 object-cover mb-2"
+          />
+          <div class="mt-2 text-center">
+            {{ starship?.name }}
+            <p>Model: {{ starship.model }}</p>
+            <p>Manufacturer: {{ starship.manufacturer }}</p>
+          </div>
         </NuxtLink>
-        <p>Model: {{ starship.model }}</p>
-        <p>Manufacturer: {{ starship.manufacturer }}</p>
       </div>
     </div>
 
     <div v-else-if="loading" class="text-center text-xl font-semibold">
       <Loader />
     </div>
-
-    <div v-if="!loading" class="mt-8 flex justify-center items-center space-x-2">
-      <button
-        v-for="page in pages"
-        :key="page"
-        @click="goToPage(page)"
-        :disabled="currentPage === page"
-        :class="[ 
-          'px-4 py-2 border rounded-md',
-          currentPage === page ? 'bg-blue-500 text-white cursor-not-allowed' : 'bg-gray-200'
-        ]"
-      >
-        {{ page }}
-      </button>
-    </div>
+    <Pagination 
+      v-if="!loading"
+      :currentPage="currentPage" 
+      :totalPages="totalPages" 
+      @pageClick="goToPage" 
+    />
   </div>
 </template>
 
@@ -41,6 +34,12 @@
 import { ref, computed, watch } from 'vue';
 import { useRoute, useRouter, useAsyncData, useState } from 'nuxt/app';
 import Loader from '~/components/Loader.vue';
+import Pagination from '~/components/Pagination.vue';
+import { useSeoMeta } from '#app'
+
+useSeoMeta({
+  title: 'Star Wars App | Starships',
+})
 
 const route = useRoute();
 const router = useRouter();
@@ -103,6 +102,12 @@ const getStarshipId = (url) => {
 
 const getStarshipImage = (url) => {
   const id = getStarshipId(url);
-  return `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
+  const noImageIds = [2, 3, 17, 32, 49, 52, 58, 59, 61];
+
+  if (noImageIds.includes(Number(id)) || id > 63) {
+    return '/no-image.png';
+  } else {
+    return `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
+  }
 };
 </script>

@@ -29,5 +29,9 @@
 </template>
 
 <script setup>
+import { useSeoMeta } from '#app'
 
+useSeoMeta({
+  title: 'NuxtJs | Star Wars App',
+})
 </script>

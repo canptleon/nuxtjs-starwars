@@ -3,16 +3,18 @@
     <h1 class="text-2xl font-bold mb-8">Films</h1>
     <div class="grid grid-cols-3 gap-4">
       <div v-for="film in films" :key="film.title" class="border p-4 rounded-md bg-gray-100">
+        <NuxtLink :to="`/films-detail/${getFilmId(film.url)}`" class="font-semibold">
         <img
           :src="getFilmImage(film.url)"
           alt="Film Image"
-          class="w-full h-32 object-cover mb-2"
+          class="w-full h-128 object-cover mb-2"
         />
-        <NuxtLink :to="`/films-detail/${getFilmId(film.url)}`" class="font-semibold">
+        <div class="mt-2 text-center">
           {{ film.title }}
-        </NuxtLink>
-        <p>Release Date: {{ film.release_date }}</p>
-        <p>Director: {{ film.director }}</p>
+          <p>Release Date: {{ film.release_date }}</p>
+          <p>Director: {{ film.director }}</p>
+        </div>
+      </NuxtLink>
       </div>
     </div>
   </div>
@@ -20,6 +22,11 @@
 
 <script setup>
 import { useAsyncData } from 'nuxt/app';
+import { useSeoMeta } from '#app'
+
+useSeoMeta({
+  title: 'Star Wars App | Films',
+})
 
 const { data: films } = await useAsyncData('films', async () => {
   const response = await fetch('https://swapi.dev/api/films/');
