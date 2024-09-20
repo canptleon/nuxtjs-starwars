@@ -1,14 +1,18 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold mb-8">Vehicles</h1>
-
     <div v-if="!loading && vehicles?.length" class="grid grid-cols-3 gap-4 max-w-[50%] m-auto">
-      <div v-for="vehicle in vehicles" :key="vehicle?.name" class=" rounded-[17px] overflow-hidden  bg-[#fbde2a29] transition-all duration-100 hover:[box-shadow:1px_1px_16px_-1px_#fadd2a] pb-[10px]">
+      <div v-for="(vehicle, index) in vehicles" :key="vehicle?.name" 
+          class="rounded-[17px] overflow-hidden bg-[#fbde2a29] transition-all duration-100 hover:[box-shadow:1px_1px_16px_-1px_#fadd2a] pb-[10px]"
+          :class="{
+            'col-start-2': (vehicles.length % 3 === 1 && index === vehicles.length - 1), 
+            'col-start-2 col-end-4': (vehicles.length % 3 === 2 && index === vehicles.length - 1)
+          }">
         <NuxtLink :to="`/vehicles-detail/${getVehicleId(vehicle?.url)}`" class="font-semibold">
           <img
             :src="getVehicleImage(vehicle.url)"
             alt="Vehicle Image"
-            class="w-full h-128 object-cover mb-2 "
+            class="w-full h-128 object-cover mb-2"
           />
           <div class="mt-2 text-center text-white">
             {{ vehicle?.name }}
@@ -18,6 +22,7 @@
         </NuxtLink>
       </div>
     </div>
+
 
     <div v-else-if="loading" class="text-center text-xl font-semibold">
       <Loader />
