@@ -29,5 +29,5 @@
 </template>
 
 <script setup>
-// Add your handleLogoClick logic if needed
+
 </script>
