@@ -1,6 +1,5 @@
 <template>
   <div v-if="planet" class="flex flex-col items-center rounded-[20px] justify-center w-[400px] ml-[auto] mr-[auto] mt-[220px] min-h-[370px] bg-white text-black p-4">
-    <!-- Planet Image -->
     <img
       :src="getPlanetImage(route.params.id)"
       alt="Planet Image"
@@ -12,43 +11,36 @@
     <p class="text-lg mb-2"><strong>Terrain:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ planet.terrain }}</span></p>
     <p class="text-lg mb-2"><strong>Population:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ planet.population }}</span></p>
   </div>
-  <div v-else>
-    <p class="text-center">Loading...</p>
+  <div v-else-if="pending" class="text-center">
+    <p>Loading...</p>
+  </div>
+  <div v-else-if="error" class="text-center text-red-500">
+    <p>Failed to load planet data. Please try again later.</p>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useAsyncData } from '#app';
 
-const planet = ref({}); // Store planet data
-const route = useRoute(); // Access route info
+const route = useRoute();
 
-// Function to fetch planet data based on ID
-const fetchPlanet = async () => {
-  try {
+const { data: planet, pending, error } = await useAsyncData(
+  `planet-${route.params.id}`,
+  async () => {
     const response = await fetch(`https://swapi.dev/api/planets/${route.params.id}/`);
-    const data = await response.json();
-    planet.value = data;
-  } catch (error) {
-    console.error('Failed to fetch planet:', error);
+    if (!response.ok) {
+      throw new Error('Failed to fetch planet data');
+    }
+    return await response.json();
+  }
+);
+
+const getPlanetImage = (id) => {
+  if ((id >= 2 && id <= 19) || id == 21) {
+    return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
+  } else {
+    return '/no-image.png';
   }
 };
-
-// Get image URL based on planet ID (you can use a placeholder or an actual image source)
-const getPlanetImage = (id) => {
-  return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`; // Example URL for images
-};
-
-// Initial fetch when component mounts
-onMounted(() => {
-  fetchPlanet();
-});
 </script>
-
-<style scoped>
-/* Center the loading text */
-.loading {
-  text-align: center;
-}
-</style>

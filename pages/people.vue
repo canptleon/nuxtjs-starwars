@@ -89,11 +89,6 @@ const goToPage = async (page) => {
   }
 };
 
-const pages = computed(() => {
-  return Array.from({ length: totalPages.value }, (_, i) => i + 1);
-});
-
-
 watch(route, async () => {
   currentPage.value = parseInt(route.query.page || '1');
   await refresh();
@@ -106,7 +101,6 @@ const getPersonId = (url) => {
 const getPersonImage = (url) => {
   const id = getPersonId(url);
 
-  
   return `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
 };
 </script>

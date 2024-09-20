@@ -1,6 +1,5 @@
 <template>
   <div v-if="species" class="flex flex-col items-center rounded-[20px] justify-center w-[400px] ml-[auto] mr-[auto] mt-[220px] min-h-[370px] bg-white text-black p-4">
-    <!-- Species Image -->
     <img
       :src="getSpeciesImage(route.params.id)"
       alt="Species Image"
@@ -10,45 +9,35 @@
     <p class="text-lg mb-2"><strong>Classification:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ species.classification }}</span></p>
     <p class="text-lg mb-2"><strong>Language:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ species.language }}</span></p>
     <p class="text-lg mb-2"><strong>Average Lifespan:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ species.average_lifespan }} years</span></p>
-    <p class="text-lg mb-2"><strong>Designation:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ species.designation }}</span></p> <!-- Additional info -->
+    <p class="text-lg mb-2"><strong>Designation:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ species.designation }}</span></p>
   </div>
-  <div v-else>
-    <p class="text-center">Loading...</p>
+  <div v-else-if="pending" class="text-center">
+    <Loader />
+  </div>
+  <div v-else-if="error" class="text-center text-red-500">
+    <p>Failed to load species data. Please try again later.</p>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useAsyncData } from '#app';
+import Loader from '~/components/Loader.vue';
 
-const species = ref({}); // Store species data
-const route = useRoute(); // Access route info
+const route = useRoute();
 
-// Function to fetch species data based on ID
-const fetchSpecies = async () => {
-  try {
+const { data: species, pending, error } = await useAsyncData(
+  `species-${route.params.id}`,
+  async () => {
     const response = await fetch(`https://swapi.dev/api/species/${route.params.id}/`);
-    const data = await response.json();
-    species.value = data;
-  } catch (error) {
-    console.error('Failed to fetch species:', error);
+    if (!response.ok) {
+      throw new Error('Failed to fetch species data');
+    }
+    return await response.json();
   }
-};
+);
 
-// Get image URL based on species ID (you can use a placeholder or an actual image source)
 const getSpeciesImage = (id) => {
-  return `https://starwars-visualguide.com/assets/img/species/${id}.jpg`; // Example URL for images
+  return `https://starwars-visualguide.com/assets/img/species/${id}.jpg`;
 };
-
-// Initial fetch when component mounts
-onMounted(() => {
-  fetchSpecies();
-});
 </script>
-
-<style scoped>
-/* Center the loading text */
-.loading {
-  text-align: center;
-}
-</style>

@@ -1,6 +1,5 @@
 <template>
   <div v-if="film" class="flex flex-col items-start rounded-[20px] justify-center w-[500px] ml-[auto] mr-[auto] mt-[220px] min-h-[470px] bg-white text-black p-4">
-    <!-- Film Image -->
     <img
       :src="getFilmImage(route.params.id)"
       alt="Film Image"
@@ -14,42 +13,30 @@
     <p class="text-md">{{ film.opening_crawl }}</p>
   </div>
   <div v-else>
-    <p class="text-center">Loading...</p>
+    <Loader />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import Loader from '~/components/Loader.vue';
+import { useAsyncData } from '#app';
 
-const film = ref({}); // Store film data
-const route = useRoute(); // Access route info
+const route = useRoute();
 
-// Function to fetch film data based on ID
-const fetchFilm = async () => {
-  try {
+const { data: film, pending, error } = await useAsyncData(
+  `film-${route.params.id}`,
+  async () => {
     const response = await fetch(`https://swapi.dev/api/films/${route.params.id}/`);
-    const data = await response.json();
-    film.value = data;
-  } catch (error) {
-    console.error('Failed to fetch film:', error);
+    if (!response.ok) {
+      throw new Error('Failed to fetch film data');
+    }
+    return await response.json();
   }
-};
+);
 
-// Get image URL based on film ID
 const getFilmImage = (id) => {
-  return `https://starwars-visualguide.com/assets/img/films/${id}.jpg`; // Example URL for images
+  return `https://starwars-visualguide.com/assets/img/films/${id}.jpg`;
 };
-
-// Initial fetch when component mounts
-onMounted(() => {
-  fetchFilm();
-});
 </script>
-
-<style scoped>
-/* Center the loading text */
-.loading {
-  text-align: center;
-}
-</style>

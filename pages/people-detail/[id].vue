@@ -1,6 +1,5 @@
 <template>
   <div v-if="person" class="flex flex-col items-center rounded-[20px] justify-center w-[400px] ml-[auto] mr-[auto] mt-[220px] min-h-[470px] bg-white text-black p-4">
-    <!-- Person Image -->
     <img
       :src="getPersonImage(route.params.id)"
       alt="Person Image"
@@ -12,54 +11,34 @@
     <p class="text-lg mb-2">Hair Color: <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.hair_color }}</span></p>
     <p class="text-lg mb-2">Skin Color: <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.skin_color }}</span></p>
     <p class="text-lg mb-2">Birth Year: <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.birth_year }}</span></p>
-    <p class="text-lg mb-2 text-center">Homeworld: <br /><span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.homeworld }}</span></p> <!-- Example additional info -->
-    <p class="text-lg mb-2 text-center">Species: <br /><span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ person.species }}</span></p> <!-- Example additional info -->
   </div>
-  <div v-else>
-    <p class="text-center">Loading...</p>
+  <div v-else-if="pending" class="text-center">
+    <Loader />
+  </div>
+  <div v-else-if="error" class="text-center text-red-500">
+    <p>Failed to load person data. Please try again.</p>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useAsyncData } from '#app';
+import Loader from '~/components/Loader.vue';
 
-const person = ref(null); // Store person data
-const route = useRoute(); // Access route info
+const route = useRoute();
 
-// Function to fetch person data based on ID
-const fetchPerson = async (id) => {
-  try {
-    const response = await fetch(`https://swapi.dev/api/people/${id}/`);
-    const data = await response.json();
-    person.value = data;
-  } catch (error) {
-    console.error('Failed to fetch person:', error);
-  }
-};
-
-// Get image URL based on person ID
-const getPersonImage = (id) => {
-  return `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`; // Example URL for images
-};
-
-// Initial fetch when component mounts
-onMounted(() => {
-  fetchPerson(route.params.id);
-});
-
-// Watch for changes in the route parameters and refetch the data
-watch(
-  () => route.params.id,
-  (newId) => {
-    fetchPerson(newId);
+const { data: person, pending, error } = await useAsyncData(
+  `person-${route.params.id}`,
+  async () => {
+    const response = await fetch(`https://swapi.dev/api/people/${route.params.id}/`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch person data');
+    }
+    return await response.json();
   }
 );
-</script>
 
-<style scoped>
-/* Center the loading text */
-.loading {
-  text-align: center;
-}
-</style>
+const getPersonImage = (id) => {
+  return `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
+};
+</script>

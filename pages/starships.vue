@@ -109,7 +109,7 @@ const getStarshipImage = (url) => {
   const id = getStarshipId(url);
   const noImageIds = [2, 3, 17, 32, 49, 52, 58, 59, 61];
 
-  if (noImageIds.includes(Number(id)) || id > 63) {
+  if (noImageIds.includes(Number(id)) || id >= 63) {
     return '/no-image.png';
   } else {
     return `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
