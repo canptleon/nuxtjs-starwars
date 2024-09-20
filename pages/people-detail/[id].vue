@@ -1,5 +1,5 @@
 <template>
-  <div v-if="person" class="flex flex-col items-center rounded-[20px] justify-center w-[400px] ml-[auto] mr-[auto] mt-[220px] min-h-[470px] bg-white text-black p-4">
+  <div v-if="person" class="flex flex-col items-center rounded-[20px] justify-center w-[400px] ml-[auto] mr-[auto] mt-[220px] sm:mt-[170px] min-h-[470px] bg-white text-black p-4">
     <img
       :src="getPersonImage(route.params.id)"
       alt="Person Image"

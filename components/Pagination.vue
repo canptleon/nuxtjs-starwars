@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loading" class="mt-8 flex justify-center items-center space-x-2">
+  <div v-if="!loading" class="mt-8 flex justify-center items-center space-x-2 sm:justify-start sm:max-w-[-webkit-fill-available]">
     <button
       v-for="page in totalPages"
       :key="page"

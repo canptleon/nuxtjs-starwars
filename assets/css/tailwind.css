@@ -31,3 +31,9 @@ body {
   object-fit: cover;
   z-index: -1;
 }
+
+@media(max-width:576px) {
+  body {
+    padding-bottom: 0px;
+  }
+}

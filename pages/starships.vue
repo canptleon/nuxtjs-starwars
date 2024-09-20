@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold mb-8">Starships</h1>
-    <div v-if="!loading && starships?.length" class="grid grid-cols-3 gap-4 max-w-[50%] m-auto">
+    <h1 class="text-2xl font-bold mb-8 text-white text-center font-jediFont tracking-[2px]">Starships</h1>
+    <div v-if="!loading && starships?.length" class="grid grid-cols-3 lg:grid-cols-2 gap-4 max-w-[50%] lg:max-w-[80%] sm:max-w-[90%] m-auto">
       <div v-for="(starship, index) in starships" :key="starship?.name" 
           class="rounded-[17px] overflow-hidden bg-[#fbde2a29] transition-all duration-100 hover:[box-shadow:1px_1px_16px_-1px_#fadd2a] pb-[10px]"
           :class="{
@@ -26,14 +26,16 @@
     <div v-else-if="loading" class="text-center text-xl font-semibold">
       <Loader />
     </div>
-    <Pagination 
-      v-if="!loading"
-      :currentPage="currentPage" 
-      :totalPages="totalPages" 
-      @pageClick="goToPage" 
-    />
+    <div class="sm:max-w-[90%] sm:mx-[auto] sm:my-[0] sm:overflow-scroll sm:justify-center sm:flex">
+      <Pagination 
+        v-if="!loading"
+        :currentPage="currentPage" 
+        :totalPages="totalPages" 
+        @pageClick="goToPage" 
+      />
+    </div>
   </div>
-</template>
+  </template>
 
 <script setup>
 import { ref, computed, watch } from 'vue';

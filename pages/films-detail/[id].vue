@@ -1,5 +1,5 @@
 <template>
-  <div v-if="film" class="flex flex-col items-start rounded-[20px] justify-center w-[500px] ml-[auto] mr-[auto] mt-[220px] min-h-[470px] bg-white text-black p-4">
+  <div v-if="film" class="flex flex-col items-start rounded-[20px] justify-center w-[500px] sm:w-[90%] ml-[auto] mr-[auto] mt-[220px] min-h-[470px] bg-white text-black p-4">
     <img
       :src="getFilmImage(route.params.id)"
       alt="Film Image"

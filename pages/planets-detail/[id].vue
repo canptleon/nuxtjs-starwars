@@ -1,5 +1,5 @@
 <template>
-  <div v-if="planet" class="flex flex-col items-center rounded-[20px] justify-center w-[400px] ml-[auto] mr-[auto] mt-[220px] min-h-[370px] bg-white text-black p-4">
+  <div v-if="planet" class="flex flex-col items-center rounded-[20px] justify-center w-[400px] sm:w-[90%] ml-[auto] mr-[auto] mt-[220px] min-h-[370px] bg-white text-black p-4">
     <img
       :src="getPlanetImage(route.params.id)"
       alt="Planet Image"

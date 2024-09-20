@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold mb-8">People</h1>
-    <div v-if="!loading && people?.length" class="grid grid-cols-3 gap-4 max-w-[50%] m-auto justify-items-center">
+    <h1 class="text-2xl font-bold mb-8 text-white text-center font-jediFont tracking-[2px]">People</h1>
+    <div v-if="!loading && people?.length" class="grid grid-cols-3 lg:grid-cols-2 gap-4 max-w-[50%] lg:max-w-[80%] sm:max-w-[90%] m-auto justify-items-center">
       <div v-for="(person, index) in people" :key="person?.name" 
           :class="[{ 'col-start-2': (people.length % 3 === 1 && index === people.length - 1)}, 'rounded-[17px] overflow-hidden bg-[#fbde2a29] transition-all duration-100 hover:[box-shadow:1px_1px_16px_-1px_#fadd2a] pb-[10px]']">
         <NuxtLink :to="`/people-detail/${getPersonId(person?.url)}`" class="font-semibold">
@@ -22,12 +22,14 @@
     <div v-else-if="loading" class="text-center text-xl font-semibold">
       <Loader />
     </div>
-    <Pagination 
-      v-if="!loading"
-      :currentPage="currentPage" 
-      :totalPages="totalPages" 
-      @pageClick="goToPage" 
-    />
+    <div class="sm:max-w-[90%] sm:mx-[auto] sm:my-[0] sm:overflow-scroll sm:justify-center sm:flex">
+      <Pagination 
+        v-if="!loading"
+        :currentPage="currentPage" 
+        :totalPages="totalPages" 
+        @pageClick="goToPage" 
+      />
+  </div>
   </div>
 </template>
 

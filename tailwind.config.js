@@ -13,6 +13,14 @@ module.exports = {
       jediFont: ['JediFont'], 
       jediFont2: ['JediFont2'], 
     },
+    screens: {
+      'xl': {'max': '1440px'},
+      'lg': {'max': '1200px'},
+      'md': {'max': '992px'},
+      'sm': {'max': '768px'},
+      'xs': {'max': '576px'},
+      'xxs': {'max': '390px'},
+    }
   },
   plugins: [],
 }
