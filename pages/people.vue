@@ -84,6 +84,12 @@ const goToPage = async (page) => {
   if (page !== currentPage.value && page <= totalPages.value) {
     loading.value = true;
     router.push({ query: { page } });
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+
     await refresh();
     setTimeout(() => {
       loading.value = false;

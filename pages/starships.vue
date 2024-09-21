@@ -87,16 +87,18 @@ const goToPage = async (page) => {
   if (page !== currentPage.value && page <= totalPages.value) {
     loading.value = true;
     router.push({ query: { page } });
+    
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+
     await refresh();
     setTimeout(() => {
       loading.value = false; 
     }, 200); 
   }
 };
-
-const pages = computed(() => {
-  return Array.from({ length: totalPages.value }, (_, i) => i + 1);
-});
 
 watch(route, async () => {
   currentPage.value = parseInt(route.query.page || '1');
