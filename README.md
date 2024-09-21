@@ -20,7 +20,7 @@ Check out the live demo of the project here:
   - **Starships**
   - **Vehicles**
   - **Films**
-- **Pagination**: 30 entities are displayed per page, allowing users to navigate through the entire collection.
+- **Pagination**: 10 entities are displayed per page, allowing users to navigate through the entire collection.
 - **Detailed Pages**: Each entity has a dedicated page displaying detailed information fetched from the SWAPI.
 - **Dynamic Routing**: Uses Nuxt.js's dynamic routing system to handle navigation between listing and detail pages.
 - **Loading States**: Shows loading indicators while fetching data from the API to ensure a smooth user experience.
