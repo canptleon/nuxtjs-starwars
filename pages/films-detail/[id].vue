@@ -5,7 +5,7 @@
       alt="Film Image"
       class="w-48 h-72 object-cover rounded-full mx-auto mb-4 -mt-[158px] [filter:drop-shadow(2px_4px_6px)] border-[4px] border-[solid] border-[#fcdf2b]"
     />
-    <h1 class="text-3xl font-bold mb-4 font-jediFont tracking-[2px] text-[black] [text-shadow:0px_0_3px_#fcdf2b] mx-auto">{{ film.title }}</h1>
+    <h1 class="text-3xl font-bold mb-4 font-jediFont tracking-[2px] text-[black] [text-shadow:0px_0_3px_#fcdf2b] mx-auto text-center">{{ film.title }}</h1>
     <p class="text-lg mb-2"><strong>Director:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ film.director }}</span></p>
     <p class="text-lg mb-2"><strong>Producer:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ film.producer }}</span></p>
     <p class="text-lg mb-2"><strong>Release Date:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ film.release_date }}</span></p>

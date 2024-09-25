@@ -1,15 +1,12 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold mb-8 text-white text-center font-jediFont tracking-[2px]">People</h1>
-    <div v-if="!loading && people?.length" class="grid grid-cols-3 lg:grid-cols-2 gap-4 max-w-[50%] lg:max-w-[80%] sm:max-w-[90%] m-auto justify-items-center">
-      <div v-for="(person, index) in people" :key="person?.name" 
-          :class="[{ 'col-start-2': (people.length % 3 === 1 && index === people.length - 1)}, 'rounded-[17px] overflow-hidden bg-[#fbde2a29] transition-all duration-100 hover:[box-shadow:1px_1px_16px_-1px_#fadd2a] pb-[10px]']">
+    <div v-if="!loading && people?.length"
+      class="grid grid-cols-3 lg:grid-cols-2 gap-4 max-w-[50%] lg:max-w-[80%] sm:max-w-[90%] m-auto justify-items-center">
+      <div v-for="(person, index) in people" :key="person?.name"
+        :class="[{ 'col-start-2': (people.length % 3 === 1 && index === people.length - 1) }, 'rounded-[17px] overflow-hidden bg-[#fbde2a29] transition-all duration-100 hover:[box-shadow:1px_1px_16px_-1px_#fadd2a] pb-[10px]']">
         <NuxtLink :to="`/people-detail/${getPersonId(person?.url)}`" class="font-semibold">
-          <img
-            :src="getPersonImage(person.url)"
-            alt="Person Image"
-            class="w-full h-128 object-cover mb-2"
-          />
+          <img :src="getPersonImage(person.url)" alt="Person Image" class="w-full h-128 object-cover mb-2" />
           <div class="mt-2 text-center text-white">
             {{ person?.name }}
             <p>Height: {{ person.height }} cm</p>
@@ -18,23 +15,17 @@
         </NuxtLink>
       </div>
     </div>
-
     <div v-else-if="loading" class="text-center text-xl font-semibold">
       <Loader />
     </div>
     <div class="sm:max-w-[90%] sm:mx-[auto] sm:my-[0] sm:overflow-scroll sm:justify-center sm:flex">
-      <Pagination 
-        v-if="!loading"
-        :currentPage="currentPage" 
-        :totalPages="totalPages" 
-        @pageClick="goToPage" 
-      />
-  </div>
+      <Pagination v-if="!loading" :currentPage="currentPage" :totalPages="totalPages" @pageClick="goToPage" />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute, useRouter, useAsyncData, useState } from 'nuxt/app';
 import Loader from '~/components/Loader.vue';
 import Pagination from '~/components/Pagination.vue';
@@ -50,8 +41,10 @@ const currentPage = ref(parseInt(route.query.page || '1'));
 const totalPages = useState('totalPages', () => 1);
 const loading = ref(false);
 
-const fetchPeople = async (page) => {
-  loading.value = true;
+const fetchPeople = async (page, ssr) => {
+  if (!ssr) {
+    loading.value = true;
+  }
 
   try {
     const response = await fetch(`https://swapi.dev/api/people/?page=${page}`);
@@ -66,7 +59,7 @@ const fetchPeople = async (page) => {
     totalPages.value = Math.ceil(data.count / 10);
     setTimeout(() => {
       loading.value = false;
-    }, 200); 
+    }, 150);
     return data.results;
   } catch (error) {
     console.error("Error fetching planets:", error);
@@ -76,7 +69,7 @@ const fetchPeople = async (page) => {
 
 const { data: people, refresh } = await useAsyncData('people', async () => {
   currentPage.value = parseInt(route.query.page || '1');
-  const peopleData = await fetchPeople(currentPage.value);
+  const peopleData = await fetchPeople(currentPage.value, true);
   return peopleData;
 });
 
@@ -93,7 +86,7 @@ const goToPage = async (page) => {
     await refresh();
     setTimeout(() => {
       loading.value = false;
-    }, 200);
+    }, 150);
   }
 };
 

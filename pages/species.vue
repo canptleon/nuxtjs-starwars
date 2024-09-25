@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute, useRouter, useAsyncData, useState } from 'nuxt/app';
 import Loader from '~/components/Loader.vue';
 import Pagination from '~/components/Pagination.vue';
@@ -54,8 +54,11 @@ const currentPage = ref(parseInt(route.query.page || '1'));
 const totalPages = useState('totalPages', () => 1);
 const loading = ref(false);
 
-const fetchSpecies = async (page) => {
-  loading.value = true;
+const fetchSpecies = async (page, ssr) => {
+  if(!ssr)
+  {
+    loading.value = true;
+  }
 
   try {
     const response = await fetch(`https://swapi.dev/api/species/?page=${page}`);
@@ -70,7 +73,7 @@ const fetchSpecies = async (page) => {
     totalPages.value = Math.ceil(data.count / 10);
     setTimeout(() => {
       loading.value = false;
-    }, 200);
+    }, 150);
     return data.results;
   } catch (error) {
     console.error("Error fetching species:", error);
@@ -80,7 +83,7 @@ const fetchSpecies = async (page) => {
 
 const { data: speciesList, refresh } = await useAsyncData('species', async () => {
   currentPage.value = parseInt(route.query.page || '1');
-  return await fetchSpecies(currentPage.value);
+  return await fetchSpecies(currentPage.value, true);
 });
 
 const goToPage = async (page) => {
@@ -96,7 +99,7 @@ const goToPage = async (page) => {
     await refresh();
     setTimeout(() => {
       loading.value = false;
-    }, 200); 
+    }, 150); 
   }
 };
 

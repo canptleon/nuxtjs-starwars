@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute, useRouter, useAsyncData, useState } from 'nuxt/app';
 import Loader from '~/components/Loader.vue';
 import Pagination from '~/components/Pagination.vue';
@@ -51,8 +51,11 @@ const currentPage = ref(parseInt(route.query.page || '1'));
 const totalPages = useState('totalPages', () => 1);
 const loading = ref(false);
 
-const fetchPlanets = async (page) => {
-  loading.value = true;
+const fetchPlanets = async (page, ssr) => {
+  if(!ssr)
+  {
+    loading.value = true;
+  }
 
   try {
     const response = await fetch(`https://swapi.dev/api/planets/?page=${page}`);
@@ -67,7 +70,7 @@ const fetchPlanets = async (page) => {
     totalPages.value = Math.ceil(data.count / 10);
     setTimeout(() => {
       loading.value = false;
-    }, 200); 
+    }, 150); 
     return data.results;
   } catch (error) {
     console.error("Error fetching planets:", error);
@@ -77,7 +80,7 @@ const fetchPlanets = async (page) => {
 
 const { data: planets, refresh } = await useAsyncData('planets', async () => {
   currentPage.value = parseInt(route.query.page || '1');
-  const planetsData = await fetchPlanets(currentPage.value);
+  const planetsData = await fetchPlanets(currentPage.value, true);
   return planetsData;
 });
 
@@ -94,7 +97,7 @@ const goToPage = async (page) => {
     await refresh();
     setTimeout(() => {
       loading.value = false;
-    }, 200);
+    }, 150);
   }
 };
 

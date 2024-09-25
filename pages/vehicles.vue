@@ -53,8 +53,11 @@ const currentPage = ref(parseInt(route.query.page || '1'));
 const totalPages = useState('totalPages', () => 1);
 const loading = ref(false);
 
-const fetchVehicles = async (page) => {
-  loading.value = true;
+const fetchVehicles = async (page, ssr) => {
+  if(!ssr)
+  {
+    loading.value = true;
+  }
 
   try {
     const response = await fetch(`https://swapi.dev/api/vehicles/?page=${page}`);
@@ -69,7 +72,7 @@ const fetchVehicles = async (page) => {
     totalPages.value = Math.ceil(data.count / 10);
     setTimeout(() => {
       loading.value = false; 
-    }, 200); 
+    }, 150); 
     return data.results;
   } catch (error) {
     console.error("Error fetching vehicles:", error);
@@ -79,7 +82,7 @@ const fetchVehicles = async (page) => {
 
 const { data: vehicles, refresh } = await useAsyncData('vehicles', async () => {
   currentPage.value = parseInt(route.query.page || '1');
-  return await fetchVehicles(currentPage.value);
+  return await fetchVehicles(currentPage.value, true);
 });
 
 const goToPage = async (page) => {
@@ -95,7 +98,7 @@ const goToPage = async (page) => {
     await refresh();
     setTimeout(() => {
       loading.value = false; 
-    }, 200); 
+    }, 150); 
   }
 };
 

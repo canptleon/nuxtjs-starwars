@@ -54,8 +54,11 @@ const currentPage = ref(parseInt(route.query.page || '1'));
 const totalPages = useState('totalPages', () => 1);
 const loading = ref(false);
 
-const fetchStarships = async (page) => {
-  loading.value = true;
+const fetchStarships = async (page, ssr) => {
+  if(!ssr)
+  {
+    loading.value = true;
+  }
 
   try {
     const response = await fetch(`https://swapi.dev/api/starships/?page=${page}`);
@@ -70,7 +73,7 @@ const fetchStarships = async (page) => {
     totalPages.value = Math.ceil(data.count / 10);
     setTimeout(() => {
       loading.value = false;
-    }, 200);
+    }, 150);
     return data.results;
   } catch (error) {
     console.error("Error fetching starships:", error);
@@ -80,7 +83,7 @@ const fetchStarships = async (page) => {
 
 const { data: starships, refresh } = await useAsyncData('starships', async () => {
   currentPage.value = parseInt(route.query.page || '1');
-  return await fetchStarships(currentPage.value);
+  return await fetchStarships(currentPage.value, true);
 });
 
 const goToPage = async (page) => {
@@ -96,7 +99,7 @@ const goToPage = async (page) => {
     await refresh();
     setTimeout(() => {
       loading.value = false; 
-    }, 200); 
+    }, 150); 
   }
 };
 

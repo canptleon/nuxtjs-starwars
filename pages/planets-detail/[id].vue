@@ -5,7 +5,7 @@
       alt="Planet Image"
       class="w-48 h-48 object-cover rounded-full mb-4 -mt-[158px] [filter:drop-shadow(2px_4px_6px)] border-[4px] border-[solid] border-[#fcdf2b]"
     />
-    <h1 class="text-3xl font-bold mb-4 font-jediFont tracking-[2px] text-[black] [text-shadow:0px_0_3px_#fcdf2b]">{{ planet.name }}</h1>
+    <h1 class="text-3xl font-bold mb-4 font-jediFont tracking-[2px] text-[black] [text-shadow:0px_0_3px_#fcdf2b] text-center">{{ planet.name }}</h1>
     <p class="text-lg mb-2"><strong>Diameter:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ planet.diameter }} km</span></p>
     <p class="text-lg mb-2"><strong>Climate:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ planet.climate }}</span></p>
     <p class="text-lg mb-2"><strong>Terrain:</strong> <span class="text-[#fcdf2b] font-bold [filter:drop-shadow(0px_1px_0px_black)]">{{ planet.terrain }}</span></p>
